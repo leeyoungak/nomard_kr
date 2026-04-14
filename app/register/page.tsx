@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import Link from "next/link";
+import { signUp } from "./actions";
 
 const benefits = [
   "도시별 상세 리뷰 & 지도 열람",
@@ -12,6 +13,7 @@ const benefits = [
 
 export default function RegisterPage() {
   const [agreed, setAgreed] = useState(false);
+  const [state, formAction, isPending] = useActionState(signUp, null);
 
   return (
     <div className="min-h-screen bg-[#faf6f1] flex items-center justify-center px-4 py-16">
@@ -76,7 +78,14 @@ export default function RegisterPage() {
             </div>
 
             {/* Form */}
-            <div className="px-6 py-5 space-y-4">
+            <form action={formAction} className="px-6 py-5 space-y-4">
+
+              {/* Error message */}
+              {state?.error && (
+                <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm text-red-600">
+                  {state.error}
+                </div>
+              )}
 
               {/* Name */}
               <div className="space-y-1.5">
@@ -85,6 +94,7 @@ export default function RegisterPage() {
                 </label>
                 <input
                   type="text"
+                  name="nickname"
                   placeholder="nomad_traveler"
                   className="w-full border border-[#d6ccba] rounded-xl px-4 py-2.5 text-sm text-[#2c2416] bg-[#faf6f1] placeholder:text-[#b8a896] outline-none focus:border-[#2d5a27] focus:ring-2 focus:ring-[#2d5a27]/10 transition-all"
                 />
@@ -97,7 +107,9 @@ export default function RegisterPage() {
                 </label>
                 <input
                   type="email"
+                  name="email"
                   placeholder="nomad@example.com"
+                  required
                   className="w-full border border-[#d6ccba] rounded-xl px-4 py-2.5 text-sm text-[#2c2416] bg-[#faf6f1] placeholder:text-[#b8a896] outline-none focus:border-[#2d5a27] focus:ring-2 focus:ring-[#2d5a27]/10 transition-all"
                 />
               </div>
@@ -109,7 +121,9 @@ export default function RegisterPage() {
                 </label>
                 <input
                   type="password"
+                  name="password"
                   placeholder="8자 이상"
+                  required
                   className="w-full border border-[#d6ccba] rounded-xl px-4 py-2.5 text-sm text-[#2c2416] bg-[#faf6f1] placeholder:text-[#b8a896] outline-none focus:border-[#2d5a27] focus:ring-2 focus:ring-[#2d5a27]/10 transition-all"
                 />
               </div>
@@ -121,14 +135,16 @@ export default function RegisterPage() {
                 </label>
                 <input
                   type="password"
+                  name="confirmPassword"
                   placeholder="••••••••"
+                  required
                   className="w-full border border-[#d6ccba] rounded-xl px-4 py-2.5 text-sm text-[#2c2416] bg-[#faf6f1] placeholder:text-[#b8a896] outline-none focus:border-[#2d5a27] focus:ring-2 focus:ring-[#2d5a27]/10 transition-all"
                 />
               </div>
 
               {/* Terms */}
               <label className="flex items-start gap-3 cursor-pointer group">
-                <div
+                <span
                   onClick={() => setAgreed(!agreed)}
                   className={`w-5 h-5 rounded-md border-2 flex items-center justify-center text-xs transition-colors shrink-0 mt-0.5 ${
                     agreed
@@ -137,7 +153,7 @@ export default function RegisterPage() {
                   }`}
                 >
                   {agreed && "✓"}
-                </div>
+                </span>
                 <span className="text-xs text-[#7a6a54] leading-relaxed group-hover:text-[#2c2416] transition-colors">
                   <a href="#" className="text-[#2d5a27] hover:underline">이용약관</a> 및{" "}
                   <a href="#" className="text-[#2d5a27] hover:underline">개인정보처리방침</a>에 동의합니다
@@ -146,16 +162,17 @@ export default function RegisterPage() {
 
               {/* Submit */}
               <button
-                disabled={!agreed}
+                type="submit"
+                disabled={!agreed || isPending}
                 className={`w-full font-bold text-sm py-3 rounded-full transition-colors ${
-                  agreed
+                  agreed && !isPending
                     ? "bg-[#2d5a27] text-[#faf6f1] hover:bg-[#3a7030]"
                     : "bg-[#d6ccba] text-[#b8a896] cursor-not-allowed"
                 }`}
               >
-                가입하기 →
+                {isPending ? "처리 중..." : "가입하기 →"}
               </button>
-            </div>
+            </form>
 
             {/* Footer */}
             <div className="px-6 py-4 border-t border-[#d6ccba] text-center">

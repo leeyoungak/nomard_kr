@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import Link from "next/link";
+import { signIn } from "./actions";
 
 export default function LoginPage() {
   const [rememberMe, setRememberMe] = useState(false);
+  const [state, formAction, isPending] = useActionState(signIn, null);
 
   return (
     <div className="min-h-screen bg-[#faf6f1] flex items-center justify-center px-4 py-16">
@@ -37,17 +39,26 @@ export default function LoginPage() {
           </div>
 
           {/* Form */}
-          <div className="px-8 py-6 space-y-5">
+          <form action={formAction} className="px-8 py-6 space-y-5">
 
-            {/* Social Login */}
+            {/* Error message */}
+            {state?.error && (
+              <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm text-red-600">
+                {state.error}
+              </div>
+            )}
+
+            {/* Social Login (disabled) */}
             <div className="grid grid-cols-2 gap-3">
               <button
+                type="button"
                 disabled
                 className="flex items-center justify-center gap-2 border border-[#d6ccba] rounded-xl py-2.5 text-xs text-[#b8a896] bg-[#ede8de] cursor-not-allowed"
               >
                 <span>🟡</span> 카카오
               </button>
               <button
+                type="button"
                 disabled
                 className="flex items-center justify-center gap-2 border border-[#d6ccba] rounded-xl py-2.5 text-xs text-[#b8a896] bg-[#ede8de] cursor-not-allowed"
               >
@@ -69,7 +80,9 @@ export default function LoginPage() {
               </label>
               <input
                 type="email"
+                name="email"
                 placeholder="nomad@example.com"
+                required
                 className="w-full border border-[#d6ccba] rounded-xl px-4 py-3 text-sm text-[#2c2416] bg-[#faf6f1] placeholder:text-[#b8a896] outline-none focus:border-[#2d5a27] focus:ring-2 focus:ring-[#2d5a27]/10 transition-all"
               />
             </div>
@@ -86,14 +99,16 @@ export default function LoginPage() {
               </div>
               <input
                 type="password"
+                name="password"
                 placeholder="••••••••"
+                required
                 className="w-full border border-[#d6ccba] rounded-xl px-4 py-3 text-sm text-[#2c2416] bg-[#faf6f1] placeholder:text-[#b8a896] outline-none focus:border-[#2d5a27] focus:ring-2 focus:ring-[#2d5a27]/10 transition-all"
               />
             </div>
 
             {/* Remember Me */}
             <label className="flex items-center gap-3 cursor-pointer group">
-              <div
+              <span
                 onClick={() => setRememberMe(!rememberMe)}
                 className={`w-5 h-5 rounded-md border-2 flex items-center justify-center text-xs transition-colors shrink-0 ${
                   rememberMe
@@ -102,17 +117,21 @@ export default function LoginPage() {
                 }`}
               >
                 {rememberMe && "✓"}
-              </div>
+              </span>
               <span className="text-sm text-[#7a6a54] group-hover:text-[#2c2416] transition-colors">
                 자동 로그인 유지
               </span>
             </label>
 
             {/* Submit */}
-            <button className="w-full bg-[#2d5a27] text-[#faf6f1] font-bold text-sm py-3 rounded-full hover:bg-[#3a7030] transition-colors">
-              로그인 →
+            <button
+              type="submit"
+              disabled={isPending}
+              className="w-full bg-[#2d5a27] text-[#faf6f1] font-bold text-sm py-3 rounded-full hover:bg-[#3a7030] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {isPending ? "로그인 중..." : "로그인 →"}
             </button>
-          </div>
+          </form>
 
           {/* Footer */}
           <div className="px-8 py-4 border-t border-[#d6ccba] text-center">
