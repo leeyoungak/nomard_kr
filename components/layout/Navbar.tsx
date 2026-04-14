@@ -2,15 +2,16 @@ import NavbarClient from "./NavbarClient";
 
 export default function Navbar() {
   return (
-    <header className="sticky top-0 z-50 border-b border-[#2a2a2a] bg-[#0a0a0a]/95 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 border-b border-[#d6ccba] bg-[#faf6f1]/95 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-14">
           {/* Logo */}
           <a
             href="/"
-            className="text-[#00ff41] font-bold text-sm tracking-wider hover:opacity-80 transition-opacity"
+            className="text-[#2d5a27] font-bold text-base tracking-wide hover:opacity-80 transition-opacity"
+            style={{ fontFamily: "var(--font-display), 'Playfair Display', serif" }}
           >
-            [ NOMAD.KR ]
+            Nomad.KR 🌿
           </a>
 
           {/* Desktop Nav */}
@@ -19,7 +20,7 @@ export default function Navbar() {
               <a
                 key={item}
                 href="#"
-                className="text-xs text-[#888888] hover:text-[#e5e5e5] transition-colors"
+                className="text-sm text-[#7a6a54] hover:text-[#2d5a27] transition-colors"
               >
                 {item}
               </a>

@@ -46,42 +46,47 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
-  --color-nomad-green: #00ff41;
+  --color-nomad-green: #2d5a27;
+  --color-nature-forest: #2d5a27;
+  --color-nature-earth: #8b6346;
+  --color-nature-terracotta: #c4522a;
+  --color-nature-sage: #6b7c3f;
+  --color-nature-cream: #faf6f1;
 }
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #e5e5e5;
-  --card: #111111;
-  --card-foreground: #e5e5e5;
-  --popover: #111111;
-  --popover-foreground: #e5e5e5;
-  --primary: #00ff41;
-  --primary-foreground: #0a0a0a;
-  --secondary: #1a1a1a;
-  --secondary-foreground: #e5e5e5;
-  --muted: #1a1a1a;
-  --muted-foreground: #888888;
-  --accent: #1a1a1a;
-  --accent-foreground: #00ff41;
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: #2a2a2a;
-  --input: #1a1a1a;
-  --ring: #00ff41;
-  --chart-1: #00ff41;
-  --chart-2: #f0a500;
-  --chart-3: #00bfff;
-  --chart-4: #ff6b6b;
-  --chart-5: #a855f7;
-  --radius: 0rem;
-  --sidebar: #111111;
-  --sidebar-foreground: #e5e5e5;
-  --sidebar-primary: #00ff41;
-  --sidebar-primary-foreground: #0a0a0a;
-  --sidebar-accent: #1a1a1a;
-  --sidebar-accent-foreground: #e5e5e5;
-  --sidebar-border: #2a2a2a;
-  --sidebar-ring: #00ff41;
+  --background: #faf6f1;
+  --foreground: #2c2416;
+  --card: #f5f0e8;
+  --card-foreground: #2c2416;
+  --popover: #f5f0e8;
+  --popover-foreground: #2c2416;
+  --primary: #2d5a27;
+  --primary-foreground: #faf6f1;
+  --secondary: #e8f0e7;
+  --secondary-foreground: #2d5a27;
+  --muted: #ede8de;
+  --muted-foreground: #7a6a54;
+  --accent: #e8f0e7;
+  --accent-foreground: #2d5a27;
+  --destructive: #c4522a;
+  --border: #d6ccba;
+  --input: #ede8de;
+  --ring: #2d5a27;
+  --chart-1: #2d5a27;
+  --chart-2: #8b6346;
+  --chart-3: #c4522a;
+  --chart-4: #4a8a42;
+  --chart-5: #6b7c3f;
+  --radius: 0.5rem;
+  --sidebar: #f5f0e8;
+  --sidebar-foreground: #2c2416;
+  --sidebar-primary: #2d5a27;
+  --sidebar-primary-foreground: #faf6f1;
+  --sidebar-accent: #e8f0e7;
+  --sidebar-accent-foreground: #2c2416;
+  --sidebar-border: #d6ccba;
+  --sidebar-ring: #2d5a27;
 }
 
 @layer base {
@@ -90,11 +95,12 @@
   }
   body {
     @apply bg-background text-foreground;
-    background-color: #0a0a0a;
-    color: #e5e5e5;
   }
   html {
-    font-family: var(--font-mono), 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    font-family: var(--font-body), 'Lato', Georgia, sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display), 'Playfair Display', Georgia, serif;
   }
 }
 
@@ -103,11 +109,12 @@
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: #faf6f1;
 }
 ::-webkit-scrollbar-thumb {
-  background: #2a2a2a;
+  background: #d6ccba;
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #00ff41;
+  background: #2d5a27;
 }

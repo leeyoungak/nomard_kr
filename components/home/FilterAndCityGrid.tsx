@@ -15,21 +15,29 @@ export default function FilterAndCityGrid() {
   return (
     <div id="cities" className="max-w-7xl mx-auto px-4 sm:px-6 mb-16">
       {/* Section Header */}
-      <p className="text-xs text-[#555555] mb-5">
-        // CITIES -- ranked by nomad score
-      </p>
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h2
+            className="text-xl font-bold text-[#2c2416]"
+            style={{ fontFamily: "var(--font-display), 'Playfair Display', serif" }}
+          >
+            도시 랭킹
+          </h2>
+          <p className="text-xs text-[#7a6a54] mt-1">노마드 스코어 기준 정렬</p>
+        </div>
+        <a href="#" className="text-xs text-[#2d5a27] hover:underline">전체 보기 →</a>
+      </div>
 
       {/* Filter Chips */}
       <div className="flex flex-wrap gap-2 mb-6">
-        <span className="text-xs text-[#555555] self-center mr-1">FILTER:</span>
         {filterChips.map((chip) => (
           <button
             key={chip.value}
             onClick={() => setActiveFilter(chip.value)}
-            className={`text-xs px-3 py-1 border transition-colors ${
+            className={`text-xs px-4 py-1.5 rounded-full border transition-colors font-medium ${
               activeFilter === chip.value
-                ? "border-[#00ff41] text-[#00ff41] bg-[#00ff41]/5"
-                : "border-[#2a2a2a] text-[#555555] hover:border-[#444444] hover:text-[#888888]"
+                ? "border-[#2d5a27] text-[#2d5a27] bg-[#e8f0e7]"
+                : "border-[#d6ccba] text-[#7a6a54] hover:border-[#2d5a27] hover:text-[#2d5a27]"
             }`}
           >
             {chip.label}
@@ -45,8 +53,8 @@ export default function FilterAndCityGrid() {
           ))}
         </div>
       ) : (
-        <div className="border border-[#2a2a2a] p-10 text-center text-[#555555] text-sm">
-          // 검색 결과 없음
+        <div className="border border-[#d6ccba] rounded-xl p-10 text-center text-[#7a6a54] text-sm bg-[#f5f0e8]">
+          검색 결과가 없습니다
         </div>
       )}
     </div>

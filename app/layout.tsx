@@ -1,12 +1,18 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono } from "next/font/google";
+import { Playfair_Display, Lato } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-mono",
+const playfairDisplay = Playfair_Display({
+  variable: "--font-display",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "600", "700", "800"],
+});
+
+const lato = Lato({
+  variable: "--font-body",
+  subsets: ["latin"],
+  weight: ["300", "400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -31,8 +37,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={`${jetbrainsMono.variable} h-full`}>
-      <body className="min-h-full flex flex-col bg-[#0a0a0a] text-[#e5e5e5]">
+    <html lang="ko" className={`${playfairDisplay.variable} ${lato.variable} h-full`}>
+      <body className="min-h-full flex flex-col">
         <Navbar />
         <main className="flex-1">{children}</main>
       </body>
