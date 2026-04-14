@@ -1,7 +1,11 @@
 "use server";
 
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
+import {
+  TEST_ACCOUNT,
+  setMockSession,
+} from "@/lib/auth/mock";
 
 export async function signIn(
   _prevState: { error: string } | null | undefined,
@@ -10,20 +14,21 @@ export async function signIn(
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
+  if (!email || !password) {
+    return { error: "이메일과 비밀번호를 입력해주세요." };
+  }
+
+  if (email !== TEST_ACCOUNT.email || password !== TEST_ACCOUNT.password) {
+    return { error: "이메일 또는 비밀번호가 올바르지 않습니다." };
+  }
+
   let shouldRedirect = false;
 
   try {
-    const supabase = await createClient();
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-
-    if (error) {
-      console.error("[signIn] Supabase error:", error.message);
-      return { error: "이메일 또는 비밀번호가 올바르지 않습니다." };
-    }
-
+    const cookieStore = await cookies();
+    setMockSession(cookieStore, email);
     shouldRedirect = true;
-  } catch (e) {
-    console.error("[signIn] Unexpected error:", e);
+  } catch {
     return { error: "서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요." };
   }
 
