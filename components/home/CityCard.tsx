@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { City } from "@/lib/mock-data";
 
 function ScoreBar({ score }: { score: number }) {
@@ -16,10 +17,11 @@ function ScoreBar({ score }: { score: number }) {
 
 interface Props {
   city: City;
+  href?: string;
 }
 
-export default function CityCard({ city }: Props) {
-  return (
+export default function CityCard({ city, href }: Props) {
+  const card = (
     <div className="border border-[#d6ccba] hover:border-[#2d5a27] hover:-translate-y-0.5 hover:shadow-md transition-all cursor-pointer group rounded-xl bg-[#f5f0e8] overflow-hidden">
       {/* Card Header */}
       <div className="border-b border-[#d6ccba] p-4 flex items-start justify-between gap-2">
@@ -73,4 +75,6 @@ export default function CityCard({ city }: Props) {
       </div>
     </div>
   );
+
+  return href ? <Link href={href}>{card}</Link> : card;
 }

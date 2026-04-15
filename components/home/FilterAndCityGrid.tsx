@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { cities, filterChips } from "@/lib/mock-data";
 import CityCard from "./CityCard";
 
@@ -25,7 +26,7 @@ export default function FilterAndCityGrid() {
           </h2>
           <p className="text-xs text-[#7a6a54] mt-1">노마드 스코어 기준 정렬</p>
         </div>
-        <a href="#" className="text-xs text-[#2d5a27] hover:underline">전체 보기 →</a>
+        <Link href="/cities" className="text-xs text-[#2d5a27] hover:underline">전체 보기 →</Link>
       </div>
 
       {/* Filter Chips */}
@@ -49,7 +50,7 @@ export default function FilterAndCityGrid() {
       {filtered.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filtered.map((city) => (
-            <CityCard key={city.nameKo} city={city} />
+            <CityCard key={city.slug} city={city} href={`/cities/${city.slug}`} />
           ))}
         </div>
       ) : (
