@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { meetups } from "@/lib/mock-data";
 
 export default function MeetupsSection() {
@@ -11,9 +12,9 @@ export default function MeetupsSection() {
         >
           예정 밋업
         </h2>
-        <a href="#" className="text-xs text-[#2d5a27] hover:underline">
+        <Link href="/meetups" className="text-xs text-[#2d5a27] hover:underline">
           전체 보기 →
-        </a>
+        </Link>
       </div>
 
       {/* Meetup Grid */}
