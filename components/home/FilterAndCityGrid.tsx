@@ -7,6 +7,34 @@ import CityCard from "./CityCard";
 
 export default function FilterAndCityGrid() {
   const [activeFilter, setActiveFilter] = useState("all");
+  const [likedIds, setLikedIds] = useState<Set<string>>(new Set());
+  const [dislikedIds, setDislikedIds] = useState<Set<string>>(new Set());
+
+  function toggleLike(slug: string) {
+    setLikedIds((prev) => {
+      const next = new Set(prev);
+      next.has(slug) ? next.delete(slug) : next.add(slug);
+      return next;
+    });
+    setDislikedIds((prev) => {
+      const next = new Set(prev);
+      next.delete(slug);
+      return next;
+    });
+  }
+
+  function toggleDislike(slug: string) {
+    setDislikedIds((prev) => {
+      const next = new Set(prev);
+      next.has(slug) ? next.delete(slug) : next.add(slug);
+      return next;
+    });
+    setLikedIds((prev) => {
+      const next = new Set(prev);
+      next.delete(slug);
+      return next;
+    });
+  }
 
   const filtered =
     activeFilter === "all"
@@ -50,7 +78,15 @@ export default function FilterAndCityGrid() {
       {filtered.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filtered.map((city) => (
-            <CityCard key={city.slug} city={city} href={`/cities/${city.slug}`} />
+            <CityCard
+                key={city.slug}
+                city={city}
+                href={`/cities/${city.slug}`}
+                liked={likedIds.has(city.slug)}
+                disliked={dislikedIds.has(city.slug)}
+                onLike={() => toggleLike(city.slug)}
+                onDislike={() => toggleDislike(city.slug)}
+              />
           ))}
         </div>
       ) : (

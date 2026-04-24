@@ -13,6 +13,34 @@ interface Props {
 export default function CitiesFilterGrid({ cities }: Props) {
   const [activeFilter, setActiveFilter] = useState("all");
   const [sortKey, setSortKey] = useState<SortKey>("score");
+  const [likedIds, setLikedIds] = useState<Set<string>>(new Set());
+  const [dislikedIds, setDislikedIds] = useState<Set<string>>(new Set());
+
+  function toggleLike(slug: string) {
+    setLikedIds((prev) => {
+      const next = new Set(prev);
+      next.has(slug) ? next.delete(slug) : next.add(slug);
+      return next;
+    });
+    setDislikedIds((prev) => {
+      const next = new Set(prev);
+      next.delete(slug);
+      return next;
+    });
+  }
+
+  function toggleDislike(slug: string) {
+    setDislikedIds((prev) => {
+      const next = new Set(prev);
+      next.has(slug) ? next.delete(slug) : next.add(slug);
+      return next;
+    });
+    setLikedIds((prev) => {
+      const next = new Set(prev);
+      next.delete(slug);
+      return next;
+    });
+  }
 
   const filtered =
     activeFilter === "all"
@@ -62,6 +90,10 @@ export default function CitiesFilterGrid({ cities }: Props) {
               key={city.slug}
               city={city}
               href={`/cities/${city.slug}`}
+              liked={likedIds.has(city.slug)}
+              disliked={dislikedIds.has(city.slug)}
+              onLike={() => toggleLike(city.slug)}
+              onDislike={() => toggleDislike(city.slug)}
             />
           ))}
         </div>
