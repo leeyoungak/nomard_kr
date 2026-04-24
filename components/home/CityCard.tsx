@@ -18,9 +18,13 @@ function ScoreBar({ score }: { score: number }) {
 interface Props {
   city: City;
   href?: string;
+  liked?: boolean;
+  disliked?: boolean;
+  onLike?: () => void;
+  onDislike?: () => void;
 }
 
-export default function CityCard({ city, href }: Props) {
+export default function CityCard({ city, href, liked, disliked, onLike, onDislike }: Props) {
   const card = (
     <div className="border border-[#d6ccba] hover:border-[#2d5a27] hover:-translate-y-0.5 hover:shadow-md transition-all cursor-pointer group rounded-xl bg-[#f5f0e8] overflow-hidden">
       {/* Card Header */}
@@ -68,9 +72,35 @@ export default function CityCard({ city, href }: Props) {
           </span>
           <span className="text-[10px] text-[#b8a896]">/100</span>
         </div>
-        <div className="text-[10px] text-[#7a6a54] text-right">
-          {city.monthlyCostMin} ~ {city.monthlyCostMax}
-          <br />/ 월
+        <div className="flex items-center gap-3">
+          {(onLike || onDislike) && (
+            <div className="flex items-center gap-2">
+              {onLike && (
+                <button
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); onLike(); }}
+                  className={`flex items-center gap-0.5 text-xs transition-colors ${
+                    liked ? "text-[#c4522a]" : "text-[#b8a896] hover:text-[#c4522a]"
+                  }`}
+                >
+                  <span>{liked ? "♥" : "♡"}</span>
+                </button>
+              )}
+              {onDislike && (
+                <button
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); onDislike(); }}
+                  className={`flex items-center gap-0.5 text-xs transition-colors ${
+                    disliked ? "text-[#7a6a54]" : "text-[#b8a896] hover:text-[#7a6a54]"
+                  }`}
+                >
+                  <span>{disliked ? "✕" : "✕"}</span>
+                </button>
+              )}
+            </div>
+          )}
+          <div className="text-[10px] text-[#7a6a54] text-right">
+            {city.monthlyCostMin} ~ {city.monthlyCostMax}
+            <br />/ 월
+          </div>
         </div>
       </div>
     </div>
